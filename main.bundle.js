@@ -186,8 +186,6 @@ var ContentComponent = /** @class */ (function () {
     };
     ContentComponent.prototype.selectRow = function (index, test) {
         this.selectedRow = index;
-        console.log(this.selectedRow);
-        console.log(test);
     };
     // CREATE FUNCTIONALITY
     ContentComponent.prototype.createNewRow = function () {
