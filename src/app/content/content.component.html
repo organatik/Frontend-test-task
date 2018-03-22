@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="col-md-12">
+    <div class="col-md-12 controls">
+      <button class="btn btn-default" (click)="createNewRow()">Создать</button>
+      <button class="btn btn-default" (click)="editRow()">Редактировать</button>
+      <button class="btn btn-default" (click)="deleteRow()">Удалить</button>
+    </div>
+    <table class="table table-bordered">
+      <tr>
+        <th>Заголовок</th>
+        <th>Превью фото </th>
+        <th>Идентификатор альбома</th>
+        <th>Идентификатор фото</th>
+      </tr>
+      <tr *ngFor="let photo of photosList | paginate: { itemsPerPage: 10, currentPage: p };let i = index"
+          (click)="selectRow(i)" [ngClass]="{ 'active': selectedRow == i }" >
+        <td>{{ photo.title }}</td>
+        <td>
+          <a [href]="photo.url" target="_blank">
+            <img [src]="photo.thumbnailUrl" alt="miniPhoto">
+          </a>
+        </td>
+        <td>{{ photo.albumId }}</td>
+        <td>{{ photo.id }}</td>
+      </tr>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <!--EDIT FORM-->
+    <div class="edit col-md-4 col-md-offset-4 form" *ngIf="showEditForm">
+      <form [formGroup]="MyFormEdit">
+        <i class="fa fa-times" aria-hidden="true" (click)="closeEditRow()"></i>
+        <div class="form-group">
+          <label for="title">Заголовок</label>
+          <input type="text" class="form-control" id="title"  formControlName="title" >
+        </div>
+        <div class="form-group">
+          <label for="thumbnailUrl">Превью фото</label>
+          <input type="text" class="form-control" id="thumbnailUrl" formControlName="thumbnailUrl" >
+        </div>
+        <div class="form-group">
+          <label for="thumbnailUrl">Фото</label>
+          <input type="text" class="form-control" id="url" formControlName="url" >
+        </div>
+        <div class="form-group">
+          <label for="albumId">Идентификатор альбома</label>
+          <input type="text" class="form-control" id="albumId" formControlName="albumId" >
+        </div>
+        <div class="form-group">
+          <label for="id">Идентификатор фото</label>
+          <input type="text" class="form-control" id="id" formControlName="id">
+        </div>
+        <button type="submit" (click)="saveEdit()"  class="btn btn-default">Сохранить</button>
+      </form>
+    </div>
+    <!--CREATE FORM-->
+    <div class="edit col-md-4 col-md-offset-4 form" *ngIf="showCreateForm">
+      <form [formGroup]="MyFormCreate">
+        <i class="fa fa-times" aria-hidden="true" (click)="closeCreateRow()"></i>
+        <div class="form-group">
+          <label for="title">Заголовок</label>
+          <input type="text" class="form-control" id="title"  formControlName="title" required
+                 [ngClass]="{ 'error-input':  MyFormCreate.controls['title'].touched && !MyFormCreate.controls['title'].valid }">
+          <span class="error" *ngIf="!MyFormCreate.controls['title'].valid && MyFormCreate.controls['title'].touched ">Field required*</span>
+        </div>
+        <div class="form-group">
+          <label for="thumbnailUrl">Превью фото</label>
+          <input type="text" class="form-control" id="thumbnailUrl" formControlName="thumbnailUrl" required
+                 [ngClass]="{ 'error-input':  MyFormCreate.controls['thumbnailUrl'].touched && !MyFormCreate.controls['thumbnailUrl'].valid }" >
+          <span class="error" *ngIf="!MyFormCreate.controls['thumbnailUrl'].valid && MyFormCreate.controls['thumbnailUrl'].touched ">Field required*</span>
+        </div>
+        <div class="form-group">
+          <label for="url">Фото</label>
+          <input type="text" class="form-control" id="url" formControlName="url" required
+                 [ngClass]="{ 'error-input':  MyFormCreate.controls['url'].touched && !MyFormCreate.controls['url'].valid }" >
+          <span class="error" *ngIf="!MyFormCreate.controls['url'].valid && MyFormCreate.controls['url'].touched ">Field required*</span>
+        </div>
+        <div class="form-group">
+          <label for="albumId">Идентификатор альбома</label>
+          <input type="text" class="form-control" id="albumId" formControlName="albumId" required
+                 [ngClass]="{ 'error-input':  MyFormCreate.controls['albumId'].touched && !MyFormCreate.controls['albumId'].valid }" >
+          <span class="error" *ngIf="!MyFormCreate.controls['albumId'].valid && MyFormCreate.controls['albumId'].touched ">Field required*</span>
+        </div>
+        <div class="form-group">
+          <label for="id">Идентификатор фото</label>
+          <input type="text" class="form-control" id="id" formControlName="id" required
+                 [ngClass]="{ 'error-input':  MyFormCreate.controls['id'].touched && !MyFormCreate.controls['id'].valid }">
+          <span class="error" *ngIf="!MyFormCreate.controls['id'].valid && MyFormCreate.controls['id'].touched ">Field required*</span>
+        </div>
+        <button type="submit" [disabled]="!MyFormCreate.valid" (click)="saveNewRow()"  class="btn btn-default">Сохранить</button>
+      </form>
+    </div>
+  </div>
+</div>
