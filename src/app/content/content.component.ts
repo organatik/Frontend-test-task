@@ -52,8 +52,6 @@ export class ContentComponent implements OnInit {
   }
   selectRow(index, test) {
     this.selectedRow = index;
-    console.log(this.selectedRow);
-    console.log(test);
   }
   // CREATE FUNCTIONALITY
   createNewRow() {
