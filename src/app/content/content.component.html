@@ -13,7 +13,7 @@
         <th>Идентификатор фото</th>
       </tr>
       <tr *ngFor="let photo of photosList | paginate: { itemsPerPage: 10, currentPage: p };let i = index"
-          (click)="selectRow(i)" [ngClass]="{ 'active': selectedRow == i }" >
+          (click)="selectRow( ((p-1)*10)+i)" [ngClass]="{ 'active': selectedRow ==  ((p-1)*10)+i }" >
         <td>{{ photo.title }}</td>
         <td>
           <a [href]="photo.url" target="_blank">

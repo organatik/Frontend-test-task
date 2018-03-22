@@ -16,7 +16,8 @@ export class ContentComponent implements OnInit {
   MyFormEdit: FormGroup;
   MyFormCreate: FormGroup;
   showEditForm = false;
-  showCreateForm = false
+  showCreateForm = false;
+  p = 1;
   constructor( private http: HttpClient, private fb: FormBuilder) {
     this.createForm();
     this.createFormSave();
@@ -49,8 +50,10 @@ export class ContentComponent implements OnInit {
       thumbnailUrl: ['', Validators.required ],
     });
   }
-  selectRow(index) {
+  selectRow(index, test) {
     this.selectedRow = index;
+    console.log(this.selectedRow);
+    console.log(test);
   }
   // CREATE FUNCTIONALITY
   createNewRow() {
